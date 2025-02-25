@@ -1,4 +1,4 @@
-# TablEase
+# Tablease
 
 A modern, full-stack Restaurant Point of Sale (POS) system built with Next.js, TypeScript, and Prisma. This application provides a comprehensive solution for managing restaurant orders, menu items, and staff.
 
