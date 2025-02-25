@@ -322,6 +322,15 @@ export default function OrdersPage() {
     }
   };
 
+  // Filter orders based on status
+  const ongoingOrders = orders.filter(
+    (order) => !["COMPLETED", "CANCELLED"].includes(order.status)
+  );
+  
+  const completedOrders = orders.filter(
+    (order) => ["COMPLETED", "CANCELLED"].includes(order.status)
+  );
+
   return (
     <div className="container mx-auto py-6">
       <div className="mb-6 flex items-center">
@@ -336,9 +345,10 @@ export default function OrdersPage() {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="new-order">New Order</TabsTrigger>
-          <TabsTrigger value="orders">Orders</TabsTrigger>
+          <TabsTrigger value="ongoing">Ongoing</TabsTrigger>
+          <TabsTrigger value="completed">Completed</TabsTrigger>
         </TabsList>
 
         <TabsContent value="new-order" className="mt-6">
@@ -369,7 +379,7 @@ export default function OrdersPage() {
           )}
         </TabsContent>
 
-        <TabsContent value="orders" className="mt-6">
+        <TabsContent value="ongoing" className="mt-6">
           {isLoadingOrders ? (
             <div className="flex justify-center items-center py-12">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -377,7 +387,22 @@ export default function OrdersPage() {
             </div>
           ) : (
             <OrderList
-              orders={orders}
+              orders={ongoingOrders}
+              onUpdateStatus={handleUpdateStatus}
+              onDeleteOrder={handleDeleteOrder}
+            />
+          )}
+        </TabsContent>
+
+        <TabsContent value="completed" className="mt-6">
+          {isLoadingOrders ? (
+            <div className="flex justify-center items-center py-12">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              <span className="ml-2">Loading orders...</span>
+            </div>
+          ) : (
+            <OrderList
+              orders={completedOrders}
               onUpdateStatus={handleUpdateStatus}
               onDeleteOrder={handleDeleteOrder}
             />

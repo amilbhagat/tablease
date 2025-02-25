@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -72,46 +71,28 @@ export function MenuItems({ categories, onAddItem }: MenuItemsProps) {
             ?.menuItems.map((item) => (
               <div
                 key={item.id}
-                className="flex border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+                className="flex justify-between items-start p-4 border rounded-lg hover:bg-accent/5"
               >
-                {item.image ? (
-                  <div className="w-24 h-24 relative">
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div className="w-24 h-24 bg-muted flex items-center justify-center text-muted-foreground">
-                    No image
-                  </div>
-                )}
-                <div className="flex-1 p-3 flex flex-col">
-                  <div className="flex justify-between items-start">
-                    <h3 className="font-medium">{item.name}</h3>
-                    <span className="text-sm font-semibold">
-                      ${formatPrice(item.price)}
-                    </span>
-                  </div>
+                <div className="flex-1">
+                  <h3 className="font-medium">{item.name}</h3>
                   {item.description && (
                     <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
                       {item.description}
                     </p>
                   )}
-                  <div className="mt-auto pt-2 flex justify-end">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="h-8 px-2"
-                      onClick={() => handleAddItem(item)}
-                    >
-                      <Plus className="h-4 w-4 mr-1" />
-                      Add
-                    </Button>
+                  <div className="mt-2 font-semibold">
+                    ${formatPrice(item.price)}
                   </div>
                 </div>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="h-8 px-2 ml-4"
+                  onClick={() => handleAddItem(item)}
+                >
+                  <Plus className="h-4 w-4 mr-1" />
+                  Add
+                </Button>
               </div>
             ))}
         </div>
